@@ -1,5 +1,31 @@
 from PIL import Image
-im = Image.open("image1.jpg")
-im.show()
+from binary import convertToBinary
 
-print(im.format, im.size[1], im.mode)
+im = Image.open("image2.jpg")
+
+def encodeImage (inputImage, text):
+    img = Image.open(inputImage).convert("RGB")
+    binaryText = convertToBinary(text)
+    width, height = img.size
+    
+    textIndex = 0
+    
+    for x in range(height):
+        for y in range(width):
+            if textIndex < len(text):
+                r, g, b = img.getpixel((x, y))
+                color = [r,g,b]
+                
+                for i in range(len(color)):
+                    if textIndex < len(text):    
+                        bit = int(binaryText[textIndex])
+                        color[i] = (color[i] & ~1) | bit
+                        textIndex += 1
+                img.putpixel(((x, y)), tuple(color))  
+                             
+            else:
+                img.save("output.png")
+                print("image saved successfully")
+                return
+            
+encodeImage("image2.jpg", "hello ayushi, myself janhavi")
