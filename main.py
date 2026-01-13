@@ -1,29 +1,17 @@
-from PIL import Image
-from binary import convertToBinary
+from decoder import decodeImage
+from encoder import encodeImage
 
-def encodeImage (inputImage, text):
-    img = Image.open(inputImage).convert("RGB")
-    binaryText = convertToBinary(text)
-    width, height = img.size
+print("**************IMAGE STEANOGRAPHGY**************")
+option = input("Enter: \n1 to encode\n2 to decode")
+
+if option=="1":
+    inputImg = input("Enter the image to be encoded")
+    inputText = input("Enter the text to be encoded")
+    encodeImage(inputImg, inputText)
     
-    textIndex = 0
+elif option=="2":
+    inputSteg = input("Enter the image to be decoded")
+    decodeImage(inputSteg)
     
-    for y in range(height):
-        for x in range(width):
-            if textIndex < len(binaryText):
-                r, g, b = img.getpixel((x, y))
-                color = [r,g,b]
-                
-                for i in range(len(color)):
-                    if textIndex < len(binaryText):    
-                        bit = int(binaryText[textIndex])
-                        color[i] = (color[i] & ~1) | bit
-                        textIndex += 1
-                img.putpixel(((x, y)), tuple(color))  
-                             
-            else:
-                img.save("output_image.png")
-                print("image saved successfully")
-                return
-            
-encodeImage("image2.jpg", "hello ayushi, myself janhavi")
+else:
+    print("Invalid response")
