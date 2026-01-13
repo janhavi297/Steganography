@@ -1,7 +1,7 @@
 from PIL import Image
 from binary import convertToBinary
 
-def encodeImage (inputImage, text):
+def encodeImage (inputImage, text, outputImage):
     img = Image.open(inputImage).convert("RGB")
     binaryText = convertToBinary(text)
     width, height = img.size
@@ -22,6 +22,6 @@ def encodeImage (inputImage, text):
                 img.putpixel((x, y), tuple(color))  
                              
             else:
-                img.save("output_{inputImage}")
+                img.save(outputImage)
                 print("image saved successfully")
                 return

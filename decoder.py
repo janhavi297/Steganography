@@ -16,5 +16,5 @@ def decodeImage (stegImage):
                 lastBit = str(color[i] & 1)
                 binaryText += lastBit
                 
-                if lastTwoInBin in binaryText:
+                if binaryText.endswith(lastTwoInBin):
                     return convertToText(binaryText)
